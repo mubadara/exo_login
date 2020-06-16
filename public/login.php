@@ -21,12 +21,13 @@ $formData = [
     'login' => '',
     'password' => '',
     $user = require __DIR__.'/user-data.php',
+    $url = 'private-page.php',
 ];
 
 if($_POST) {
     $errors = [];
     $messages = [];
-    // $user = require __DIR__.'/user-data.php';
+    $user = require __DIR__.'/user-data.php';
 
     //Remplacement de valeurs
     if (isset($_POST['login'])){
@@ -69,6 +70,18 @@ if($_POST) {
        $errors = true;
        $messages = "Identifiant ou mot de passe incorrect";
    }
+   if ($errors) {
+       dump("t'es trop con");
+   }
+   if (!$errors) {
+       $_SESSION = $user['user_id'];
+       $_SESSION = $user['login'];
+       $_SESSION = $user['password'];
+       $url = './private-page.php';
+       header("Location: {$url}", true, 302);
+       exit();
+        dump("It's ok");
+   }
 
 }
 
@@ -77,5 +90,6 @@ echo $twig->render('login.html.twig', [
     'errors' => $errors,
     'messages' => $messages,
     'formData' => $formData,
-    'user' => $user,
+    'user' => $user, 
+    'url' => $url,
 ]);

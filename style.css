@@ -1,0 +1,16 @@
+body {
+	margin: 0, auto;
+}
+form {
+	position: absolute;
+	left: 500px;
+	top: 250px;
+}
+.invalid-feedback {
+	color: red;
+}
+label {
+	font-family: Roboto;
+	font-size: 22px;
+	font-style: italic;
+}
