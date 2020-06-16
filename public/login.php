@@ -54,7 +54,7 @@ if($_POST) {
         $errors['login'] = true;
         $messages['login'] = "Identifiant ou mot de passe incorrect";
     }
-    if (!isset($_POST['password']) || empty($_POST['password'])) {
+    elseif (!isset($_POST['password']) || empty($_POST['password'])) {
         $errors['password'] = true;
         $messages['password'] = "Merci de renseigner votre mot de passe";
     }
@@ -69,9 +69,6 @@ if($_POST) {
    elseif (!password_verify($_POST['password'], $user['password_hash'])){
        $errors = true;
        $messages = "Identifiant ou mot de passe incorrect";
-   }
-   if ($errors) {
-       dump("t'es trop con");
    }
    if (!$errors) {
        $_SESSION = $user['user_id'];
