@@ -16,7 +16,22 @@ $twig = new \Twig\Environment($loader, [
 
 // chargement de l'extension Twig_Extension_Debug
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-session_start;
+
+// démarrage de la session
+session_start();
+
+// on vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    // l'utilisateur n'est pas connecté
+
+    // redirection de l'utilisateur vers la page de login
+    $url = 'login.php';
+    header("Location: {$url}", true, 302);
+    exit();
+}
 
 // affichage du rendu d'un template
-echo $twig->render('private-page.html.twig');
+echo $twig->render('private-page.html.twig', [
+    // transmission de données au template
+    'session' => $_SESSION,
+]);

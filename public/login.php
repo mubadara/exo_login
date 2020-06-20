@@ -13,22 +13,18 @@ $twig = new \Twig\Environment($loader, [
     // activation du mode de variables strictes
     'strict_variables' => true,
 ]);
-
+$user = require __DIR__.'/user-data.php';
 // chargement de l'extension Twig_Extension_Debug
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 session_start;
 $formData = [
     'login' => '',
     'password' => '',
-    $user = require __DIR__.'/user-data.php',
-    $url = 'private-page.php',
 ];
-
-if($_POST) {
     $errors = [];
     $messages = [];
-    $user = require __DIR__.'/user-data.php';
-
+if($_POST) {
+    
     //Remplacement de valeurs
     if (isset($_POST['login'])){
         $formData['login'] = $_POST['login'];
@@ -37,7 +33,7 @@ if($_POST) {
         $formData['password'] = $_POST['password'];
     }
 
-    //Validations
+    //Validations login
     if (!isset($_POST['login']) || empty($_POST['login'])) {
         $errors['login'] = true;
         $messages['login'] = "Merci de renseigner votre login";
@@ -54,30 +50,25 @@ if($_POST) {
         $errors['login'] = true;
         $messages['login'] = "Identifiant ou mot de passe incorrect";
     }
-    elseif (!isset($_POST['password']) || empty($_POST['password'])) {
+    ///Validations password
+    if (!isset($_POST['password']) || empty($_POST['password'])) {
         $errors['password'] = true;
-        $messages['password'] = "Merci de renseigner votre mot de passe";
-    }
-    elseif (strlen($_POST['password']) < 4){
+        $messages['password'] = 'identifiant ou mot de passe incorrect';
+    } elseif (strlen($_POST['password']) < 4 || strlen($_POST['password']) > 100) {
         $errors['password'] = true;
-        $messages['password'] = "4 caractères minimum";
-    }
-    elseif (strlen($_POST['password']) > 100){
+        $messages['password'] = 'identifiant ou mot de passe incorrect';
+    } elseif (!password_verify($_POST['password'], $user['password_hash'])) {
         $errors['password'] = true;
-        $messages['password'] = "100 caractères max";
+        $messages['password'] = 'identifiant ou mot de passe incorrect';
     }
-   elseif (!password_verify($_POST['password'], $user['password_hash'])){
-       $errors = true;
-       $messages = "Identifiant ou mot de passe incorrect";
-   }
    if (!$errors) {
-       $_SESSION = $user['user_id'];
-       $_SESSION = $user['login'];
-       $_SESSION = $user['password'];
-       $url = './private-page.php';
+       session_start();
+       $_SESSION['user_id'] = $user['user_id'];
+       $_SESSION['login'] = $user['login'];
+
+       $url = 'private-page.php';
        header("Location: {$url}", true, 302);
        exit();
-        dump("It's ok");
    }
 
 }
@@ -87,6 +78,4 @@ echo $twig->render('login.html.twig', [
     'errors' => $errors,
     'messages' => $messages,
     'formData' => $formData,
-    'user' => $user, 
-    'url' => $url,
 ]);
