@@ -16,7 +16,6 @@ $twig = new \Twig\Environment($loader, [
 $user = require __DIR__.'/user-data.php';
 // chargement de l'extension Twig_Extension_Debug
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-session_start;
 $formData = [
     'login' => '',
     'password' => '',
