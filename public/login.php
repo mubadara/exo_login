@@ -39,11 +39,11 @@ if($_POST) {
     }
     elseif (strlen($_POST['login']) < 4){
         $errors['login'] = true;
-        $messages['login'] = "4 caractères minimum";
+        $messages['login'] = "Votre identifiant ne peut faire moins de 4 caractères";
     }
     elseif (strlen($_POST['login']) > 100){
         $errors['login'] = true;
-        $messages['login'] = "100 caractères maximum";
+        $messages['login'] = "Votre identifiant ne peut faire plus de 100 caractères";
     }
     elseif ($_POST['login'] != $user['login']){
         $errors['login'] = true;
