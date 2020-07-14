@@ -1,0 +1,20 @@
+.title {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 0;
+    position: absolute;
+	left: 500px;
+    top: 250px;
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.logout {
+    color: rgb(219, 151, 23);
+    font-family: sans-serif;
+    text-decoration: none;
+    margin: 0 auto;
+}

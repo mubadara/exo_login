@@ -35,7 +35,7 @@ if($_POST) {
     //Validations login
     if (!isset($_POST['login']) || empty($_POST['login'])) {
         $errors['login'] = true;
-        $messages['login'] = "Merci de renseigner votre login";
+        $messages['login'] = "Identifiant ou mot de passe incorrect";
     }
     elseif (strlen($_POST['login']) < 4){
         $errors['login'] = true;
